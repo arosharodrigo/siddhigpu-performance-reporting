@@ -1,0 +1,56 @@
+OS & GPU driver related Issues and Fixes
+========================================
+
+1. When login loop exists disable secure boot & purge nvidia drivers then reinstall nvidia drivers freshly.
+
+1.1 Disable secure boot - http://www.technorms.com/45538/disable-enable-secure-boot-asus-motherboard-uefi-bios-utility
+Plug in a USB drive
+Ensure the proper OS Type is selected, and go into Key Management. - Windows UEFI mode
+Save Secure Boot Keys to USB
+Delete Platform Key (PK) to disable secure boot. (Note: Do not delete other keys)
+Save and restart to apply settings (usually F10) and boot with ‘secure boot’ disabled.
+
+
+1.2 Ubuntu 16.04 login loop fix - 
+
+http://askubuntu.com/questions/760934/graphics-issues-after-installing-ubuntu-16-04-with-nvidia-graphics
+http://askubuntu.com/questions/761819/nvidi-361-login-loop-ubuntu-16-04-lts
+http://askubuntu.com/questions/596907/login-loop-unable-to-run-unity-not-xauthority-ownership-but-may-be-related-t
+
+Log into your account in the TTY. (ctrl + alt + F1)
+Run sudo apt-get purge nvidia-*
+Run sudo add-apt-repository ppa:graphics-drivers/ppa and then sudo apt-get update.
+Run sudo apt-get install nvidia-364.
+Reboot and your graphics issue should be fixed.
+
+Apart from above you might get help from following link to install nvidia driver for GTX960 with Ubuntu 14.04
+https://ubuntuforums.org/showthread.php?t=2263316
+
+
+2. After installing Nvidia driver resolution can be limited to 800x600. That can be fixed by editing /etc/X11/xorg.conf
+(Note: Check for xorg backup folder)
+
+Not working sample setting:
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Unknown"
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+    Option         "DPMS"
+EndSection
+
+Working sample setting:
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Unknown"
+    HorizSync       28.0 - 72.0
+    VertRefresh     43.0 - 60.0
+EndSection
+
+
+3. Install CUDA 7.5 on Ubuntu 16.04
+https://www.pugetsystems.com/labs/hpc/NVIDIA-CUDA-with-Ubuntu-16-04-beta-on-a-laptop-if-you-just-cannot-wait-775/
+
+
